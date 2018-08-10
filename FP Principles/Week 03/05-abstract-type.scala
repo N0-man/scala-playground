@@ -43,15 +43,19 @@ class IntConcrete extends Abstract {
 }
 
 //type with anonymus functions
+//Given a singleton set that can never be displayed fully but can only identify if an element is contained within it via contains method...
 type Set = Int => Boolean //declare a functor that accepts an integer and return a boolean
 def contains(s: Set, elem: Int): Boolean = s(elem)
 
-def singletonSet(elem: Int): Set = (x: Int) => x == elem
+def singletonSet(elem: Int): Set = (x: Int) => x == elem //funciton evaluation represents the set
+def union(s: Set, t: Set): Set = x => s(x) || t(x) //infer x as Int from Set return type
 
 val s1 = singletonSet(2) // this would hold a function as (x: Int) => x == 2
 val s2 = singletonSet(4) // this would hold a function as (x: Int) => x == 4
-println (contains(s1, 1))
-// evaluated as s(elem) --> s(1) --> (1) => 1 == 2
+val s3 = union(s1, s2) // this would be (x: Int) => (x => x == 2) || (x => x == 4)
+println (contains(s1, 1)) // evaluated as s(elem) --> s(1) --> (1) => 1 == 2
+println (contains(s3, 4))
+
 
 
 
